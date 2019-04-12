@@ -6,6 +6,8 @@ import {BrowserRouter, Route} from 'react-router-dom';
 import Login from './Login';
 import Buildings from './Buildings';
 import App from './App';
+import Occupants from './Occupants';
+import './i18n';
 
 ReactDOM.render((
     <BrowserRouter>
@@ -13,6 +15,7 @@ ReactDOM.render((
             <Route path="/" component={App} />
             <Route path="/login" component={Login}/>
             <Route path="/buildings" component={Buildings}/>
+            <Route path="/occupants" component={Occupants}/>
         </div>
 
     </BrowserRouter>

@@ -3,7 +3,10 @@ import logo from './logo.svg';
 import './App.css';
 import 'react-notifications/lib/notifications.css';
 import PageNavbarAdmin from './components/PageNavbarAdmin'
-import {Row, Grid, Col} from 'react-bootstrap';
+import {Row, Grid, Col, Button} from 'react-bootstrap';
+import { withNamespaces } from 'react-i18next';
+import i18n from "i18next";
+import NavbarLogin from "./components/NavbarLogin";
 
 class App extends Component {
 
@@ -18,13 +21,12 @@ class App extends Component {
     }
   }
 
-
   render() {
 
       console.log(localStorage.getItem("role"));
       let navbar;
       if (localStorage.getItem("role").match(null)) {
-          navbar = null;
+          navbar = <NavbarLogin/>
       } else if (localStorage.getItem("role").match("ROLE_ADMIN")) {
           navbar = <PageNavbarAdmin/>
       }
@@ -59,4 +61,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default withNamespaces()(App);

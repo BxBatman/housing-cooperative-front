@@ -4,6 +4,9 @@ import './css/Login.css';
 import axios from 'axios';
 import {NotificationContainer, NotificationManager} from "react-notifications";
 import {withRouter} from 'react-router-dom';
+import { Trans } from 'react-i18next';
+import { withNamespaces } from 'react-i18next';
+import i18n from "i18next";
 
 
 class Login extends Component {
@@ -69,7 +72,7 @@ class Login extends Component {
                         />
                     </FormGroup>
                     <FormGroup controlId="password" bsSize="large">
-                        <h4>Password</h4>
+                        <h4><Trans>Password</Trans></h4>
                         <FormControl
                             value={this.state.password}
                             onChange={this.handleChange}
@@ -82,7 +85,7 @@ class Login extends Component {
                         disabled={!this.validateForm()}
                         type="submit"
                     >
-                        Login
+                        <Trans>Login</Trans>
                     </Button>
                     <NotificationContainer/>
                 </form>
@@ -93,4 +96,4 @@ class Login extends Component {
 
 }
 
-export default Login;
+export default withNamespaces()(Login);

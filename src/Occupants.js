@@ -1,42 +1,57 @@
 import React, {Component} from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
-import {Row, Grid, Col} from 'react-bootstrap';
 import axios from 'axios';
+import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
+import {Row, Grid, Col, Button} from 'react-bootstrap';
 import { withNamespaces } from 'react-i18next';
+import {LinkContainer} from 'react-router-bootstrap';
 import { Trans } from 'react-i18next';
-
-class Buildings extends Component {
+class Occupants extends Component {
     constructor(props) {
         super();
         this.state = {
-            buildings: [],
-            columns: [{
+            occupants: [],
+            columns:[{
                 dataField: 'id',
-                text: <Trans>Building ID</Trans>
+                text: <Trans>Occupant ID</Trans>
             }, {
-                dataField: 'number',
-                text: <Trans>Buildings</Trans>
-            }]
+                dataField:'firstname',
+                text: <Trans>First name</Trans>
+            }, {
+                dataField:'lastname',
+                text: <Trans>Last name</Trans>
+            }, {
+                dataField: 'email',
+                text: 'E-mail'
+            }, {
+                dataField: 'button',
+                text: <Trans>Costs</Trans>
+            }],
         }
+
     };
 
+
     componentDidMount() {
-        axios.get("http://localhost:8080/building/all",{
+        axios.get("http://localhost:8080/occupant/all", {
             headers: {
                 "Authorization": localStorage.getItem("token")
             }
         }).then(response => {
-            console.log(response);
-            const newBuildings = response.data.map(e => {
-                return {
-                    id: e.id,
-                    number: e.number
-                };
-            });
-            const newState = Object.assign({}, this.state, {
-                buildings: newBuildings
-            })
+          console.log(response);
+          const newOccupants = response.data.map(e=>{
+              return {
+                  id: e.id,
+                  firstname: e.firstname,
+                  lastname: e.lastname,
+                  email:e.email,
+                  button: <LinkContainer to={"/costs/"+ e.id} ><Button><Trans>Check costs</Trans></Button></LinkContainer>
+              };
+          });
+
+          const newState = Object.assign({}, this.state, {
+              occupants: newOccupants
+          })
             this.setState(newState);
         }).catch(error => console.log(error))
     }
@@ -45,8 +60,6 @@ class Buildings extends Component {
     render() {
 
         const {SearchBar} = Search;
-
-
         return (
             <Grid>
                 <Row>
@@ -54,7 +67,7 @@ class Buildings extends Component {
                     <Col lg={6}>
                         <ToolkitProvider
                             keyField="id"
-                            data={this.state.buildings}
+                            data={this.state.occupants}
                             columns={this.state.columns}
                             search
                         >
@@ -63,7 +76,7 @@ class Buildings extends Component {
                                 props => (
                                     <div>
                                         <h3><Trans>Search through table</Trans></h3>
-                                        <SearchBar { ...props.searchProps } />
+                                        <SearchBar { ...props.searchProps } placeholder=" " />
                                         <hr />
                                         <BootstrapTable
                                             { ...props.baseProps }
@@ -82,4 +95,4 @@ class Buildings extends Component {
     }
 }
 
-export default withNamespaces()(Buildings);
+export default withNamespaces()(Occupants);
