@@ -3,6 +3,7 @@ import axios from 'axios';
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
 import {Row, Grid, Col, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
 import {LinkContainer} from 'react-router-bootstrap';
 import { Trans } from 'react-i18next';
@@ -25,7 +26,7 @@ class Occupants extends Component {
                 text: 'E-mail'
             }, {
                 dataField: 'button',
-                text: <Trans>Costs</Trans>
+                text: <Trans>Check</Trans>
             }],
         }
 
@@ -45,7 +46,11 @@ class Occupants extends Component {
                   firstname: e.firstname,
                   lastname: e.lastname,
                   email:e.email,
-                  button: <LinkContainer to={"/costs/"+ e.id} ><Button><Trans>Check costs</Trans></Button></LinkContainer>
+                  button: <Link to={{
+                      pathname: "/premises",
+                      state: {id: e.id}
+
+                  }}><Button><Trans>Premises</Trans></Button></Link>
               };
           });
 

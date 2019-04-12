@@ -7,6 +7,7 @@ import Login from './Login';
 import Buildings from './Buildings';
 import App from './App';
 import Occupants from './Occupants';
+import Premises from './Premises';
 import './i18n';
 
 ReactDOM.render((
@@ -16,6 +17,7 @@ ReactDOM.render((
             <Route path="/login" component={Login}/>
             <Route path="/buildings" component={Buildings}/>
             <Route path="/occupants" component={Occupants}/>
+            <Route path="/premises" component={Premises}/>
         </div>
 
     </BrowserRouter>
