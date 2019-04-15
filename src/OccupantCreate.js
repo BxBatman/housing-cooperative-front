@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Col, FormControl, FormGroup, Glyphicon, Grid, HelpBlock, Label, Row} from 'react-bootstrap';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import Loader from 'react-loader-spinner'
 import axios from 'axios';
 import { Trans } from 'react-i18next';
 import { withNamespaces } from 'react-i18next';
@@ -12,7 +13,9 @@ class OccupantCreate extends Component {
         this.state = {
             firstname: '',
             lastname: '',
-            email: ''
+            email: '',
+            loading: false,
+            inprogress: false
         }
     }
 
@@ -25,33 +28,59 @@ class OccupantCreate extends Component {
     OnOccupantCreateSubmit = (e) => {
         e.preventDefault();
 
-        axios.post("http://localhost:8080/occupant", {
-            firstname: this.state.firstname,
-            lastname: this.state.lastname,
-            email: this.state.email
+        if (this.state.inprogress === false) {
 
-        }, {
-            headers: {
-                "Authorization": localStorage.getItem('token')
-            }
-        }).then(resposne => {
-            NotificationManager.success("Added");
-            this.props.history.push("/occupants");
-        }).catch(error=>{
-            NotificationManager.error("Could not add");
-        })
+            this.setState({
+                loading:true,
+                inprogress: true
+            })
+
+            axios.post("http://localhost:8080/occupant", {
+                firstname: this.state.firstname,
+                lastname: this.state.lastname,
+                email: this.state.email
+
+            }, {
+                headers: {
+                    "Authorization": localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.setState({
+                    loading: false
+                })
+                this.props.history.push("/occupants");
+            }).catch(error => {
+                this.setState({
+                    loading: false
+                })
+                NotificationManager.error("Could not add");
+            })
+        }
 
     }
 
 
     render() {
+        let data;
+
+        if (this.state.loading) {
+          data =  <Loader
+                type="Oval"
+                color="#FFFFFF"
+                height="19"
+                width="35"
+            />
+        } else {
+            data = <Trans>Add</Trans>;
+        }
+
         return (
             <Grid>
                 <Row className="show-grid">
                     <form onSubmit={this.OnOccupantCreateSubmit}>
                         <Col xs={6} xsOffset={3}>
                             <FormGroup >
-                                <Label>First Name</Label>
+                                <Label><Trans>First name</Trans></Label>
                                 <FormControl
                                     type="text"
                                     name="firstname"
@@ -61,7 +90,7 @@ class OccupantCreate extends Component {
                             </FormGroup>
 
                             <FormGroup >
-                                <Label>Last Name</Label>
+                                <Label><Trans>Last name</Trans></Label>
                                 <FormControl
                                     type="text"
                                     name="lastname"
@@ -83,7 +112,8 @@ class OccupantCreate extends Component {
                         </Col>
                         <FormGroup>
                             <Col xs={3} xsOffset={8}>
-                                <Button type="submit"  bsStyle="success"><Glyphicon glyph="plus"/> Add</Button>
+                                <Button type="submit" style={{height: 35, width:60}}  bsStyle="success">{data}</Button>
+
                             </Col>
                         </FormGroup>
                     </form>

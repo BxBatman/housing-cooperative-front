@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {BootstrapTable, TableHeaderColumn, DeleteButton} from 'react-bootstrap-table';
+import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton} from 'react-bootstrap-table';
 import {Row, Grid, Col, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
@@ -12,7 +12,8 @@ class Occupants extends Component {
         super();
         this.state = {
             occupants: [],
-            deleteText: <Trans>Delete</Trans>
+            deleteText: <Trans>Delete</Trans>,
+            insertText: "Insert"
         }
 
     };
@@ -55,10 +56,6 @@ class Occupants extends Component {
 
 
     handleDeleteButtonClick = (onClick) => {
-        // Custom your onClick event here,
-        // it's not necessary to implement this function if you have no any process before onClick
-        console.log('This is my custom function for DeleteButton click event');
-        onClick();
     }
 
     createCustomDeleteButton = (onClick) => {
@@ -67,7 +64,21 @@ class Occupants extends Component {
             <DeleteButton
                 btnText= {text}
                 btnContextual='btn-warning'
-                onClick={ () => this.handleDeleteButtonClick(onClick) }/>
+            />
+        );
+    }
+
+    createCustomInsertButton = (onClick) => {
+        var text = this.state.insertText;
+        return (
+            <Link to={{
+                pathname: "/occupantCreate"
+            }}>
+            <InsertButton
+                btnText={text}
+                btnContextual='btn-success'
+                />
+            </Link>
         );
     }
 
@@ -75,7 +86,8 @@ class Occupants extends Component {
     render() {
 
         const options = {
-            deleteBtn: this.createCustomDeleteButton
+            deleteBtn: this.createCustomDeleteButton,
+            insertBtn: this.createCustomInsertButton
         };
 
         return (
@@ -84,7 +96,7 @@ class Occupants extends Component {
                     <Col lg={2}></Col>
                     <Col lg={8}>
                         <BootstrapTable data={this.state.occupants}
-                                        search={true} selectRow={this.selectRowProp} pagination={true} options={options} deleteRow >
+                                        search={true} selectRow={this.selectRowProp} pagination={true} options={options} insertRow deleteRow>
                             <TableHeaderColumn hidden={true} autoValue={true} dataField='id' isKey>Id</TableHeaderColumn>
                             <TableHeaderColumn dataField='firstname'><Trans>First name</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataField='lastname'><Trans>Last name</Trans></TableHeaderColumn>
