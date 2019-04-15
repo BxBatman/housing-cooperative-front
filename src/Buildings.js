@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
-import BootstrapTable from 'react-bootstrap-table-next';
 import {Row, Grid, Col} from 'react-bootstrap';
 import axios from 'axios';
-import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
+import {BootstrapTable, TableHeaderColumn, DeleteButton} from 'react-bootstrap-table';
 import { withNamespaces } from 'react-i18next';
 import { Trans } from 'react-i18next';
 
@@ -11,13 +10,7 @@ class Buildings extends Component {
         super();
         this.state = {
             buildings: [],
-            columns: [{
-                dataField: 'id',
-                text: <Trans>Building ID</Trans>
-            }, {
-                dataField: 'number',
-                text: <Trans>Buildings</Trans>
-            }]
+            deleteText: <Trans>Delete</Trans>
         }
     };
 
@@ -41,38 +34,44 @@ class Buildings extends Component {
         }).catch(error => console.log(error))
     }
 
+    handleDeleteButtonClick = (onClick) => {
+        // Custom your onClick event here,
+        // it's not necessary to implement this function if you have no any process before onClick
+        console.log('This is my custom function for DeleteButton click event');
+        onClick();
+    }
+
+    createCustomDeleteButton = (onClick) => {
+        var text = this.state.deleteText
+        return (
+            <DeleteButton
+                btnText= {text}
+                btnContextual='btn-warning'
+                onClick={ () => this.handleDeleteButtonClick(onClick) }/>
+        );
+    }
+
+
+    selectRowProp = {
+        mode: 'radio'
+    };
 
     render() {
 
-        const {SearchBar} = Search;
-
+        const options = {
+            deleteBtn: this.createCustomDeleteButton
+        };
 
         return (
             <Grid>
                 <Row>
                     <Col lg={3}></Col>
                     <Col lg={6}>
-                        <ToolkitProvider
-                            keyField="id"
-                            data={this.state.buildings}
-                            columns={this.state.columns}
-                            search
-                        >
-
-                            {
-                                props => (
-                                    <div>
-                                        <h3><Trans>Search through table</Trans></h3>
-                                        <SearchBar { ...props.searchProps } />
-                                        <hr />
-                                        <BootstrapTable
-                                            { ...props.baseProps }
-                                        />
-                                    </div>
-                                )
-                            }
-
-                        </ToolkitProvider>
+                        <BootstrapTable data={this.state.buildings} insertRow={true}
+                                        search={true} selectRow={this.selectRowProp} pagination={true}  options={options} deleteRow>
+                            <TableHeaderColumn hidden={true} autoValue={true} dataField='id' isKey>Id</TableHeaderColumn>
+                            <TableHeaderColumn dataField='number'>Number</TableHeaderColumn>
+                        </BootstrapTable>
 
                     </Col>
                     <Col lg={3}></Col>

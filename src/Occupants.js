@@ -1,33 +1,18 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import BootstrapTable from 'react-bootstrap-table-next';
-import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit';
+import {BootstrapTable, TableHeaderColumn, DeleteButton} from 'react-bootstrap-table';
 import {Row, Grid, Col, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
-import {LinkContainer} from 'react-router-bootstrap';
+import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { Trans } from 'react-i18next';
+import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 class Occupants extends Component {
     constructor(props) {
         super();
         this.state = {
             occupants: [],
-            columns:[{
-                dataField: 'id',
-                text: <Trans>Occupant ID</Trans>
-            }, {
-                dataField:'firstname',
-                text: <Trans>First name</Trans>
-            }, {
-                dataField:'lastname',
-                text: <Trans>Last name</Trans>
-            }, {
-                dataField: 'email',
-                text: 'E-mail'
-            }, {
-                dataField: 'button',
-                text: <Trans>Check</Trans>
-            }],
+            deleteText: <Trans>Delete</Trans>
         }
 
     };
@@ -45,12 +30,7 @@ class Occupants extends Component {
                   id: e.id,
                   firstname: e.firstname,
                   lastname: e.lastname,
-                  email:e.email,
-                  button: <Link to={{
-                      pathname: "/premises",
-                      state: {id: e.id}
-
-                  }}><Button><Trans>Premises</Trans></Button></Link>
+                  email:e.email
               };
           });
 
@@ -61,39 +41,58 @@ class Occupants extends Component {
         }).catch(error => console.log(error))
     }
 
+    buttonFormatter(cell, row){
+        return <Link to={{
+            pathname: "/premises",
+            state: {id: row.id}
+
+        }}><Button><Trans>Premises</Trans></Button></Link>
+    }
+
+    selectRowProp = {
+        mode: 'radio'
+    };
+
+
+    handleDeleteButtonClick = (onClick) => {
+        // Custom your onClick event here,
+        // it's not necessary to implement this function if you have no any process before onClick
+        console.log('This is my custom function for DeleteButton click event');
+        onClick();
+    }
+
+    createCustomDeleteButton = (onClick) => {
+        var text = this.state.deleteText
+        return (
+            <DeleteButton
+                btnText= {text}
+                btnContextual='btn-warning'
+                onClick={ () => this.handleDeleteButtonClick(onClick) }/>
+        );
+    }
+
 
     render() {
 
-        const {SearchBar} = Search;
+        const options = {
+            deleteBtn: this.createCustomDeleteButton
+        };
+
         return (
             <Grid>
-                <Row>
-                    <Col lg={3}></Col>
-                    <Col lg={6}>
-                        <ToolkitProvider
-                            keyField="id"
-                            data={this.state.occupants}
-                            columns={this.state.columns}
-                            search
-                        >
-
-                            {
-                                props => (
-                                    <div>
-                                        <h3><Trans>Search through table</Trans></h3>
-                                        <SearchBar { ...props.searchProps } placeholder=" " />
-                                        <hr />
-                                        <BootstrapTable
-                                            { ...props.baseProps }
-                                        />
-                                    </div>
-                                )
-                            }
-
-                        </ToolkitProvider>
-
+                <Row >
+                    <Col lg={2}></Col>
+                    <Col lg={8}>
+                        <BootstrapTable data={this.state.occupants}
+                                        search={true} selectRow={this.selectRowProp} pagination={true} options={options} deleteRow >
+                            <TableHeaderColumn hidden={true} autoValue={true} dataField='id' isKey>Id</TableHeaderColumn>
+                            <TableHeaderColumn dataField='firstname'><Trans>First name</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataField='lastname'><Trans>Last name</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataField='email'>E-mail</TableHeaderColumn>
+                            <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Premises</Trans></TableHeaderColumn>
+                        </BootstrapTable>
                     </Col>
-                    <Col lg={3}></Col>
+                    <Col lg={2}></Col>
                 </Row>
             </Grid>
         )
