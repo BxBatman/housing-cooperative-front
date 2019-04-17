@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import ReCAPTCHA from "react-google-recaptcha";
 import {Button, Col, FormControl, FormGroup, Glyphicon, Grid, HelpBlock, Label, Row} from 'react-bootstrap';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import Loader from 'react-loader-spinner'
@@ -15,7 +16,8 @@ class OccupantCreate extends Component {
             lastname: '',
             email: '',
             loading: false,
-            inprogress: false
+            inprogress: false,
+            captchaDone: false
         }
     }
 
@@ -59,6 +61,11 @@ class OccupantCreate extends Component {
 
     }
 
+    onChangeCaptcha() {
+        this.setState({
+            captchaDone: true
+        })
+    }
 
     render() {
         let data;
@@ -109,6 +116,12 @@ class OccupantCreate extends Component {
                                 />
                             </FormGroup>
 
+                            <FormGroup>
+                                <ReCAPTCHA
+                                    sitekey="6LcCKysUAAAAAC_XBiXOVTtFwLJkmoT2btDtEdGI"
+                                    onChange={this.onChangeCaptcha}
+                                />
+                            </FormGroup>
                         </Col>
                         <FormGroup>
                             <Col xs={3} xsOffset={8}>

@@ -50,7 +50,7 @@ class Login extends Component {
             if (response.data.role.match("ROLE_ADMIN")) {
                 this.props.history.push("/buildings");
             } else if (response.data.role.match("ROLE_OCCUPANT")) {
-                this.props.history.push("/buildings");
+                this.props.history.push("/occupantBills");
             }
         }).catch(error => {
             NotificationManager.error("Credentials do not match");

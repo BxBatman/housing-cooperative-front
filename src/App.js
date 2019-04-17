@@ -7,6 +7,7 @@ import {Row, Grid, Col, Button} from 'react-bootstrap';
 import { withNamespaces } from 'react-i18next';
 import i18n from "i18next";
 import NavbarLogin from "./components/NavbarLogin";
+import PageNavbarOccupant from "./components/PageNavbarOccupant";
 
 class App extends Component {
 
@@ -30,7 +31,9 @@ class App extends Component {
       } else if (localStorage.getItem("role").match("ROLE_ADMIN")) {
           navbar = <PageNavbarAdmin/>
       }
-      else {
+      else if(localStorage.getItem("role").match("ROLE_OCCUPANT")) {
+          navbar = <PageNavbarOccupant/>
+      } else {
           navbar = <PageNavbarAdmin/>
       }
 
