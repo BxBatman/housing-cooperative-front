@@ -8,7 +8,6 @@ import { Trans } from 'react-i18next';
 import { withNamespaces } from 'react-i18next';
 import i18n from "i18next";
 
-
 class Login extends Component {
     constructor(props) {
         super(props);

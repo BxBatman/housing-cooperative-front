@@ -10,6 +10,7 @@ import Occupants from './Occupants';
 import Premises from './Premises';
 import OccupantCreate from './OccupantCreate';
 import './i18n';
+import Activation from './Activation';
 
 ReactDOM.render((
     <BrowserRouter>
@@ -20,6 +21,9 @@ ReactDOM.render((
             <Route path="/occupants" component={Occupants}/>
             <Route path="/premises" component={Premises}/>
             <Route path="/occupantCreate" component={OccupantCreate}/>
+            <Route path="/activation/:token" component={(props) => (
+                <Activation token={props.match.params.token}/>
+            )}/>
         </div>
 
     </BrowserRouter>
