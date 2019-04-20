@@ -36,8 +36,8 @@ class PageNavbarOccupant extends Component {
 
                     <Nav>
                         <NavDropdown eventKey={3} title=<Trans>Select</Trans> id="basic-nav-dropdown">
-                        <LinkContainer to="/occupantBills">
-                            <MenuItem eventKey={3.1}><Trans>Bills</Trans></MenuItem>
+                        <LinkContainer to="/occupantPremises">
+                            <MenuItem eventKey={3.1}><Trans>Premises</Trans></MenuItem>
                         </LinkContainer>
                     </NavDropdown>
                 </Nav>

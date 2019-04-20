@@ -11,6 +11,9 @@ import Premises from './Premises';
 import OccupantCreate from './OccupantCreate';
 import './i18n';
 import Activation from './Activation';
+import OccupantPremises from './occupantaccount/OccupantPremises';
+import OccupantPremisesBills from './occupantaccount/OccupantPremisesBills';
+import OccupantBillCreate from './occupantaccount/OccupantBillCreate';
 
 ReactDOM.render((
     <BrowserRouter>
@@ -21,6 +24,9 @@ ReactDOM.render((
             <Route path="/occupants" component={Occupants}/>
             <Route path="/premises" component={Premises}/>
             <Route path="/occupantCreate" component={OccupantCreate}/>
+            <Route path="/occupantPremises" component={OccupantPremises}/>
+            <Route path="/occupantPremisesBills" component={OccupantPremisesBills}/>
+            <Route path="/occupantBillCreate" component={OccupantBillCreate}/>
             <Route path="/activation/:token" component={(props) => (
                 <Activation token={props.match.params.token}/>
             )}/>

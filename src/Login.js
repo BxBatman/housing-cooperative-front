@@ -45,6 +45,7 @@ class Login extends Component {
             localStorage.setItem("role", response.data.role);
             localStorage.setItem("login", this.state.login);
             localStorage.setItem("password", this.state.password);
+            localStorage.setItem("id",response.data.id);
 
             if (response.data.role.match("ROLE_ADMIN")) {
                 this.props.history.push("/buildings");
