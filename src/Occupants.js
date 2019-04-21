@@ -7,6 +7,7 @@ import { withNamespaces } from 'react-i18next';
 import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css';
 import { Trans } from 'react-i18next';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
+import {NotificationManager, NotificationContainer} from "react-notifications";
 class Occupants extends Component {
     constructor(props) {
         super();
@@ -104,7 +105,9 @@ class Occupants extends Component {
                             <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Premises</Trans></TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
-                    <Col lg={2}></Col>
+                    <Col lg={2}>
+                        <NotificationContainer/>
+                    </Col>
                 </Row>
             </Grid>
         )

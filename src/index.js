@@ -11,9 +11,9 @@ import Premises from './Premises';
 import OccupantCreate from './OccupantCreate';
 import './i18n';
 import Activation from './Activation';
-import OccupantPremises from './occupantaccount/OccupantPremises';
-import OccupantPremisesBills from './occupantaccount/OccupantPremisesBills';
-import OccupantBillCreate from './occupantaccount/OccupantBillCreate';
+import OccupantPremises from './occupant/OccupantPremises';
+import OccupantPremisesBills from './occupant/OccupantPremisesBills';
+import OccupantBillCreate from './occupant/OccupantBillCreate';
 
 ReactDOM.render((
     <BrowserRouter>
