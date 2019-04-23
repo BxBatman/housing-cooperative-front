@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {Row, Grid, Col} from 'react-bootstrap';
+import {Row, Grid, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
 import {BootstrapTable, TableHeaderColumn, DeleteButton} from 'react-bootstrap-table';
 import { withNamespaces } from 'react-i18next';
 import { Trans } from 'react-i18next';
+import {Link} from "react-router-dom";
 
 class Buildings extends Component {
     constructor(props) {
@@ -51,6 +52,17 @@ class Buildings extends Component {
         );
     }
 
+    buttonFormatter(cell, row){
+        return <Link to={{
+            pathname: "/premises",
+            state: {
+                id: row.id,
+                building: true
+            }
+
+        }}><Button><Trans>Premises</Trans></Button></Link>
+    }
+
 
     selectRowProp = {
         mode: 'radio'
@@ -71,6 +83,7 @@ class Buildings extends Component {
                                         search={true} selectRow={this.selectRowProp} pagination={true}  options={options} deleteRow>
                             <TableHeaderColumn hidden={true} autoValue={true} dataField='id' isKey>Id</TableHeaderColumn>
                             <TableHeaderColumn dataField='number'>Number</TableHeaderColumn>
+                            <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Premises</Trans></TableHeaderColumn>
                         </BootstrapTable>
 
                     </Col>

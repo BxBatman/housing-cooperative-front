@@ -46,7 +46,10 @@ class Occupants extends Component {
     buttonFormatter(cell, row){
         return <Link to={{
             pathname: "/premises",
-            state: {id: row.id}
+            state: {
+                id: row.id,
+                building: false
+            }
 
         }}><Button><Trans>Premises</Trans></Button></Link>
     }

@@ -133,8 +133,8 @@ class OccupantBills extends Component {
                             <TableHeaderColumn dataField='heating'>Heating</TableHeaderColumn>
                             <TableHeaderColumn dataField='hotWater'>Hot water</TableHeaderColumn>
                             <TableHeaderColumn dataField='coldWater'>Cold water</TableHeaderColumn>
-                            <TableHeaderColumn hidden={true} dataField='accepted'>Accepted</TableHeaderColumn>
                             <TableHeaderColumn dataField='date'>Date</TableHeaderColumn>
+                            <TableHeaderColumn dataField='accepted'>Accepted</TableHeaderColumn>
                             {data}
                         </BootstrapTable>
                     </Col>

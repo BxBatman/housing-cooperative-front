@@ -11,13 +11,21 @@ class Premises extends Component {
         super();
         this.state = {
             premises: [],
-            id: props.location.state.id
+            id: props.location.state.id,
+            isBuilding: props.location.state.building,
         }
+
     }
 
 
     componentDidMount() {
-        axios.get("http://localhost:8080/premises/occupant/" + this.state.id, {
+        var url;
+        if (this.state.isBuilding) {
+            url = "building/all/";
+        } else {
+            url = "premises/occupant/";
+        }
+        axios.get("http://localhost:8080/" + url + this.state.id, {
             headers: {
                 "Authorization": localStorage.getItem("token")
             }
@@ -38,13 +46,24 @@ class Premises extends Component {
     }
 
     render() {
+        console.log(this.state.id);
+        var url;
+
+
+        if (this.state.isBuilding) {
+            url= "/premisesAdd"
+        } else {
+            url= "/occupantNewPremises"
+        }
+
+
         return (
             <Grid>
                 <Row>
                     <Col lg={3}></Col>
                     <Col lg={6}>
                         <Link to={{
-                            pathname: "/premisesAdd",
+                            pathname: url,
                             state: {id: this.state.id}
                         }}>
                             <InsertButton
