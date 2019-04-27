@@ -48,7 +48,7 @@ class OccupantPremises extends Component {
                                 {premise.id} {premise.number}  <Link to={{
                                 pathname: "/occupantPremisesBills",
                                 state: {id: premise.id}
-                            }}><Button className="pull-right"bsSize="small" bsStyle="info">Check bills
+                            }}><Button className="pull-right" bsSize="small" bsStyle="info">Check bills
                             </Button></Link>
                             </ListGroupItem>)}
                         </ListGroup>

@@ -2,14 +2,17 @@ import React, {Component} from 'react';
 import {Col, Grid, Row} from 'react-bootstrap';
 import Select from 'react-select';
 import axios from "axios/index";
-
+import Button from "react-bootstrap/es/Button";
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 class OccupantNewPremises extends Component {
 
     constructor(props) {
-        super();
+        super(props);
         this.state = {
-            premises:[]
+            id: props.location.state.id,
+            premises:[],
+            selectedId: null
         }
     }
 
@@ -36,15 +39,46 @@ class OccupantNewPremises extends Component {
     }
 
 
+    handleChange = (selectedOption) => {
+        this.setState({
+            selectedId: selectedOption.value
+        })
+    }
+
+    addPremises = () => {
+
+        if(this.state.selectedId === null) {
+            NotificationManager.error("Choose premises!")
+
+        } else {
+            axios.post("http://localhost:8080/occupant/" + this.state.selectedId +"/" + this.state.id, {
+            }, {
+                headers: {
+                    "Authorization": localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.props.history.goBack();
+            }).catch(error => {
+                NotificationManager.error("Could not add");
+            })
+        }
+
+    }
+
+
     render() {
         return (
             <Grid>
                 <Row>
-                    <Col lg={2}></Col>
-                    <Col lg={8}>
-                        <Select options={this.state.premises}/>
+                    <Col lg={4}></Col>
+                    <Col lg={4}>
+                        <Select
+                            onChange={this.handleChange}
+                            options={this.state.premises}/>
+                        <Button type="submit" onClick={this.addPremises}  className="pull-right" bsStyle="success">Add</Button>
                     </Col>
-                    <Col lg={2}></Col>
+                    <Col lg={4}></Col>
+                    <NotificationContainer/>
                 </Row>
             </Grid>
         )

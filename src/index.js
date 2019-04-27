@@ -16,6 +16,7 @@ import OccupantPremisesBills from './occupant/OccupantPremisesBills';
 import OccupantBillCreate from './occupant/OccupantBillCreate';
 import PremisesAdd from './PremisesAdd';
 import OccupantNewPremises from './occupant/OccupantNewPremises';
+import BuildingCreate from './BuildingCreate';
 
 ReactDOM.render((
     <BrowserRouter>
@@ -34,6 +35,7 @@ ReactDOM.render((
                 <Activation token={props.match.params.token}/>
             )}/>
             <Route path="/premisesAdd" component={PremisesAdd} />
+            <Route path="/buildingCreate" component={BuildingCreate}/>
 
         </div>
 
