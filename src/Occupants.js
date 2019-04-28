@@ -59,10 +59,26 @@ class Occupants extends Component {
     };
 
 
-    handleDeleteButtonClick = (onClick) => {
+    handleDeleteButtonClick = (rowKeys) =>{
+
+
+        axios.delete("http://localhost:8080/occupant/" + rowKeys, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        } ).then(response =>{
+            NotificationManager.success("Occupant deleted");
+        }).catch(error => {
+            console.log(error);
+            NotificationManager.error("Could not delete occupant");
+        })
+
+
+
+
     }
 
-    createCustomDeleteButton = (onClick) => {
+    createCustomDeleteButton = (rowKeys) => {
         var text = this.state.deleteText
         return (
             <DeleteButton
@@ -91,6 +107,7 @@ class Occupants extends Component {
 
         const options = {
             deleteBtn: this.createCustomDeleteButton,
+            afterDeleteRow: this.handleDeleteButtonClick,
             insertBtn: this.createCustomInsertButton
         };
 

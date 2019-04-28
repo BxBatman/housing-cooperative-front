@@ -5,6 +5,7 @@ import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton} from 'rea
 import { withNamespaces } from 'react-i18next';
 import { Trans } from 'react-i18next';
 import {Link} from "react-router-dom";
+import {NotificationManager} from "react-notifications";
 
 class Buildings extends Component {
     constructor(props) {
@@ -35,11 +36,18 @@ class Buildings extends Component {
         }).catch(error => console.log(error))
     }
 
-    handleDeleteButtonClick = (onClick) => {
-        // Custom your onClick event here,
-        // it's not necessary to implement this function if you have no any process before onClick
-        console.log('This is my custom function for DeleteButton click event');
-        onClick();
+    handleDeleteButtonClick = (rowKeys) => {
+        axios.delete("http://localhost:8080/building/" + rowKeys, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        } ).then(response =>{
+            NotificationManager.success("Building deleted");
+        }).catch(error => {
+            console.log(error);
+            NotificationManager.error("Could not delete buidling");
+        })
+
     }
 
     createCustomDeleteButton = (onClick) => {
@@ -47,8 +55,7 @@ class Buildings extends Component {
         return (
             <DeleteButton
                 btnText= {text}
-                btnContextual='btn-warning'
-                onClick={ () => this.handleDeleteButtonClick(onClick) }/>
+                btnContextual='btn-warning'/>
         );
     }
 
@@ -87,6 +94,7 @@ class Buildings extends Component {
 
         const options = {
             deleteBtn: this.createCustomDeleteButton,
+            afterDeleteRow: this.handleDeleteButtonClick,
             insertBtn: this.createCustomInsertButton
         };
 
