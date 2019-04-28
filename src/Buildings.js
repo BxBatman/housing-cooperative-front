@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
 import {Row, Grid, Col, Button} from 'react-bootstrap';
 import axios from 'axios';
-import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton} from 'react-bootstrap-table';
+import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton, SearchField} from 'react-bootstrap-table';
 import { withNamespaces } from 'react-i18next';
 import { Trans } from 'react-i18next';
 import {Link} from "react-router-dom";
-import {NotificationManager} from "react-notifications";
+import {NotificationManager, NotificationContainer} from "react-notifications";
 
 class Buildings extends Component {
     constructor(props) {
         super();
         this.state = {
             buildings: [],
-            deleteText: <Trans>Delete</Trans>
+            deleteText: <Trans>Delete</Trans>,
+            insertText: <Trans>Insert</Trans>
         }
     };
 
@@ -55,6 +56,7 @@ class Buildings extends Component {
         return (
             <DeleteButton
                 btnText= {text}
+                style={{height: 35, width:80, marginRight:5}}
                 btnContextual='btn-warning'/>
         );
     }
@@ -68,9 +70,17 @@ class Buildings extends Component {
             }}>
                 <InsertButton
                     btnText={text}
+                    style={{height: 35, width:80}}
                     btnContextual='btn-success'
                 />
             </Link>
+        );
+    }
+
+    createCustomSearchField = (props) => {
+        return (
+            <SearchField
+                placeholder=" "/>
         );
     }
 
@@ -95,7 +105,8 @@ class Buildings extends Component {
         const options = {
             deleteBtn: this.createCustomDeleteButton,
             afterDeleteRow: this.handleDeleteButtonClick,
-            insertBtn: this.createCustomInsertButton
+            insertBtn: this.createCustomInsertButton,
+            searchField: this.createCustomSearchField
         };
 
         return (
@@ -112,6 +123,7 @@ class Buildings extends Component {
 
                     </Col>
                     <Col lg={3}></Col>
+                    <NotificationContainer/>
                 </Row>
             </Grid>
         )

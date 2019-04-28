@@ -17,7 +17,7 @@ i18n
     .init({
         resources,
         keySeparator: false, // we do not use keys in form messages.welcome
-        fallbackLng: 'en',
+        fallbackLng: localStorage.getItem("lang"),
         interpolation: {
             escapeValue: false // react already safes from xss
         }

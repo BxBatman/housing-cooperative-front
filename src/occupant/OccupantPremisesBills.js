@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Row, Grid, Col, Button, ListGroup, ListGroupItem} from 'react-bootstrap';
-import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton} from 'react-bootstrap-table';
+import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton, SearchField} from 'react-bootstrap-table';
 import {withNamespaces} from 'react-i18next';
 import {Trans} from 'react-i18next';
 import {Link} from 'react-router-dom';
@@ -17,7 +17,7 @@ class OccupantBills extends Component {
             id: props.location.state.id,
             buttonDisabled: false,
             pathname: "/occupantBillCreate",
-            options: ""
+            insertText: <Trans>Insert</Trans>
         }
     }
 
@@ -91,12 +91,19 @@ class OccupantBills extends Component {
 
     }
 
+    createCustomSearchField = (props) => {
+        return (
+            <SearchField
+                placeholder=" "/>
+        );
+    }
+
 
     buttonFormatter(cell, row) {
         if (row.accepted === true) {
             return <Button disabled ={true}>Done</Button>
         } else {
-            return <Button onClick={() => this.acceptBill(row)} >Accept</Button>
+            return <Button onClick={() => this.acceptBill(row)} ><Trans>Accept</Trans></Button>
         }
     }
 
@@ -105,15 +112,19 @@ class OccupantBills extends Component {
         let data;
 
         if (localStorage.getItem("role") === "ROLE_ADMIN") {
-            data = <TableHeaderColumn dataFormat={this.buttonFormatter.bind(this)}>Accept</TableHeaderColumn>
+            data = <TableHeaderColumn dataFormat={this.buttonFormatter.bind(this)}><Trans>Accept</Trans></TableHeaderColumn>
         }
+
+        const options = {
+            searchField: this.createCustomSearchField
+        };
 
 
         return (
             <Grid>
                 <Row>
-                    <Col lg={2}></Col>
-                    <Col lg={8}>
+                    <Col lg={1}></Col>
+                    <Col lg={10}>
                         <Link to={{
                             pathname: this.state.pathname,
                             state: {id: this.state.id}
@@ -125,20 +136,20 @@ class OccupantBills extends Component {
                             />
                         </Link>
                         <BootstrapTable data={this.state.bills}
-                                        search={true} pagination={true} options={this.state.options}>
+                                        search={true} pagination={true} options={options}>
                             <TableHeaderColumn hidden={true} autoValue={true} dataField='id'
                                                isKey>Id</TableHeaderColumn>
                             <TableHeaderColumn dataField='electricity'><Trans>Electricity</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataField='gas'><Trans>Gas</Trans></TableHeaderColumn>
-                            <TableHeaderColumn dataField='heating'>Heating</TableHeaderColumn>
-                            <TableHeaderColumn dataField='hotWater'>Hot water</TableHeaderColumn>
-                            <TableHeaderColumn dataField='coldWater'>Cold water</TableHeaderColumn>
-                            <TableHeaderColumn dataField='date'>Date</TableHeaderColumn>
-                            <TableHeaderColumn dataField='accepted'>Accepted</TableHeaderColumn>
+                            <TableHeaderColumn dataField='heating'><Trans>Heating</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataField='hotWater'><Trans>Hot water</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataField='coldWater'><Trans>Cold water</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataField='date'><Trans>Date</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataField='accepted'><Trans>Accepted</Trans></TableHeaderColumn>
                             {data}
                         </BootstrapTable>
                     </Col>
-                    <Col lg={2}>
+                    <Col lg={1}>
                         <NotificationContainer/>
                     </Col>
                 </Row>
@@ -148,4 +159,4 @@ class OccupantBills extends Component {
 
 }
 
-export default OccupantBills;
+export default withNamespaces()(OccupantBills);

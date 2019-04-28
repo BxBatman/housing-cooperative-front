@@ -12,12 +12,7 @@ class BuildingCreate extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstname: '',
-            lastname: '',
-            email: '',
-            loading: false,
-            inprogress: false,
-            captchaDone: false
+            number: '',
         }
     }
 
@@ -54,7 +49,7 @@ class BuildingCreate extends Component {
                     <form onSubmit={this.OnOccupantCreateSubmit}>
                         <Col xs={6} xsOffset={3}>
                             <FormGroup >
-                                <Label><Trans>First name</Trans></Label>
+                                <Label><Trans>Number</Trans></Label>
                                 <FormControl
                                     type="text"
                                     name="number"
@@ -65,7 +60,7 @@ class BuildingCreate extends Component {
                         </Col>
                         <FormGroup>
                             <Col xs={3} xsOffset={8}>
-                                <Button type="submit" style={{height: 35, width:60}}  bsStyle="success">Add</Button>
+                                <Button type="submit" style={{height: 35, width:60}}  bsStyle="success"><Trans>Insert</Trans></Button>
 
                             </Col>
                         </FormGroup>

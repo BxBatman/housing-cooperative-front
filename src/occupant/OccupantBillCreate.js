@@ -82,7 +82,7 @@ class OccupantBillCreate extends Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label>Cold Water</Label>
+                                <Label><Trans>Cold water</Trans></Label>
                                 <FormControl
                                     type="text"
                                     name="coldWater"
@@ -92,7 +92,7 @@ class OccupantBillCreate extends Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label>Hot Water</Label>
+                                <Label><Trans>Hot water</Trans></Label>
                                 <FormControl
                                     type="text"
                                     name="hotWater"
@@ -102,7 +102,7 @@ class OccupantBillCreate extends Component {
                             </FormGroup>
 
                             <FormGroup>
-                                <Label>Heating</Label>
+                                <Label><Trans>Heating</Trans></Label>
                                 <FormControl
                                     type="text"
                                     name="heating"
@@ -130,4 +130,4 @@ class OccupantBillCreate extends Component {
 
 }
 
-export default OccupantBillCreate;
+export default withNamespaces()(OccupantBillCreate);

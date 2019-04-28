@@ -7,7 +7,7 @@
   "Log out": "Log out",
   "Occupants": "Occupants",
   "Occupant ID": "Occupant ID",
-  "Search through table": "Search through table",
+  "Search": "Search",
   "First name": "First name",
   "Last name": "Last name",
   "Costs": "Costs",
@@ -15,7 +15,19 @@
   "Check": "Check",
   "Premises": "Premises",
   "Delete": "Delete",
+  "Insert": "Insert",
   "Add": "Add",
-  "Bills": "Bills"
+  "Bills": "Bills",
+  "Number": "Number",
+  "Check bills": "Check bills",
+  "Electricity": "Electricity",
+  "Gas": "Gas",
+  "Heating": "Heating",
+  "Hot water": "Hot water",
+  "Cold water": "Cold water",
+  "Date": "Date",
+  "Accepted": "Accepted",
+  "Accept": "Accept",
+  "Choose": "Choose"
 
 }

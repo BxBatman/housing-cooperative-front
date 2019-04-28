@@ -14,6 +14,7 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    localStorage.setItem("lang","en");
   }
 
   componentDidMount(){

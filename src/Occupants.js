@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton} from 'react-bootstrap-table';
+import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton, SearchField} from 'react-bootstrap-table';
 import {Row, Grid, Col, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
@@ -14,7 +14,7 @@ class Occupants extends Component {
         this.state = {
             occupants: [],
             deleteText: <Trans>Delete</Trans>,
-            insertText: "Insert"
+            insertText: <Trans>Insert</Trans>
         }
 
     };
@@ -83,6 +83,7 @@ class Occupants extends Component {
         return (
             <DeleteButton
                 btnText= {text}
+                style={{height: 35, width:80, marginRight: 5}}
                 btnContextual='btn-warning'
             />
         );
@@ -96,9 +97,18 @@ class Occupants extends Component {
             }}>
             <InsertButton
                 btnText={text}
+                style={{height: 35, width:80}}
                 btnContextual='btn-success'
                 />
             </Link>
+        );
+    }
+
+
+    createCustomSearchField = (props) => {
+        return (
+            <SearchField
+                placeholder=" "/>
         );
     }
 
@@ -108,7 +118,8 @@ class Occupants extends Component {
         const options = {
             deleteBtn: this.createCustomDeleteButton,
             afterDeleteRow: this.handleDeleteButtonClick,
-            insertBtn: this.createCustomInsertButton
+            insertBtn: this.createCustomInsertButton,
+            searchField: this.createCustomSearchField
         };
 
         return (

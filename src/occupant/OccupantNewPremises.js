@@ -4,6 +4,7 @@ import Select from 'react-select';
 import axios from "axios/index";
 import Button from "react-bootstrap/es/Button";
 import {NotificationContainer, NotificationManager} from 'react-notifications';
+import {Trans, withNamespaces} from "react-i18next";
 
 class OccupantNewPremises extends Component {
 
@@ -12,7 +13,8 @@ class OccupantNewPremises extends Component {
         this.state = {
             id: props.location.state.id,
             premises:[],
-            selectedId: null
+            selectedId: null,
+            choose: <Trans>Choose</Trans>
         }
     }
 
@@ -73,9 +75,10 @@ class OccupantNewPremises extends Component {
                     <Col lg={4}></Col>
                     <Col lg={4}>
                         <Select
+                            placeholder={this.state.choose}
                             onChange={this.handleChange}
                             options={this.state.premises}/>
-                        <Button type="submit" onClick={this.addPremises}  className="pull-right" bsStyle="success">Add</Button>
+                        <Button type="submit" onClick={this.addPremises} style={{marginTop: 10}}  className="pull-right" bsStyle="success"><Trans>Add</Trans></Button>
                     </Col>
                     <Col lg={4}></Col>
                     <NotificationContainer/>
@@ -87,4 +90,4 @@ class OccupantNewPremises extends Component {
 
 }
 
-export default OccupantNewPremises;
+export default withNamespaces()(OccupantNewPremises);

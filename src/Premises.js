@@ -13,6 +13,7 @@ class Premises extends Component {
             premises: [],
             id: props.location.state.id,
             isBuilding: props.location.state.building,
+            insertText: <Trans>Insert</Trans>
         }
 
     }
@@ -68,16 +69,19 @@ class Premises extends Component {
                         }}>
                             <InsertButton
                                 btnText={this.state.insertText}
+                                style={{marginBottom: 10}}
                                 btnContextual='btn-success'
                             />
                         </Link>
                         <ListGroup>
-                            {this.state.premises.map((premise, i) => <ListGroupItem key={i}>
-                                {premise.id} {premise.number} <Link to={{
+                            {this.state.premises.map((premise, i) => <ListGroupItem style={{height:50}} key={i}>
+                                {premise.number} <Link to={{
                                 pathname: "/occupantPremisesBills",
                                 state: {id: premise.id}
-                            }}><Button className="pull-right" bsSize="small" bsStyle="info">Check bills
+                            }}><Button className="pull-right" bsSize="small" style={{marginLeft: 5}} bsStyle="info"><Trans>Check bills</Trans>
                             </Button></Link>
+                                <Button className="pull-right" bsSize="small" bsStyle="danger"><Trans>Delete</Trans>
+                                </Button>
                             </ListGroupItem>)}
                         </ListGroup>
 

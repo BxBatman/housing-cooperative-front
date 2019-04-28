@@ -7,7 +7,7 @@
   "Log out": "Wyloguj",
   "Occupants": "Lokatorzy",
   "Occupant ID": "ID Lokatora",
-  "Search through table": "Przeszukuj tabele",
+  "Search": "Szukaj",
   "First name": "Imie",
   "Last name": "Nazwisko",
   "Costs": "Opłaty",
@@ -15,6 +15,18 @@
   "Check": "Sprawdź",
   "Premises": "Mieszkanie/a",
   "Delete": "Usuń",
+  "Insert": "Dodaj",
   "Add": "Dodaj",
-  "Bills": "Rachunki"
+  "Bills": "Rachunki",
+  "Number": "Numer",
+  "Check bills": "Sprawdź rachunki",
+  "Electricity": "Elektryczność",
+  "Gas": "Gaz",
+  "Heating": "Ogrzewanie",
+  "Hot water": "Ciepła woda",
+  "Cold water": "Zimna woda",
+  "Date": "Data",
+  "Accepted": "Zakceptowano",
+  "Accept": "Zaakceptuj",
+  "Choose": "Wybierz"
 }
