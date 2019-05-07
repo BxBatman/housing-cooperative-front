@@ -13,6 +13,8 @@ class BuildingCreate extends Component {
         super(props);
         this.state = {
             number: '',
+            numberDescriptionValid: null,
+            numberBlockText: null,
         }
     }
 
@@ -24,6 +26,20 @@ class BuildingCreate extends Component {
 
     OnOccupantCreateSubmit = (e) => {
         e.preventDefault();
+
+
+
+        if (this.state.number === "" || !/^[a-zA-Z0-9]*$/.test(this.state.number) ) {
+            this.setState({
+                numberDescriptionValid: "error",
+                numberBlockText: "Invalid number",
+            })
+        } else {
+            this.setState({
+                numberDescriptionValid: null,
+                numberBlockText: null,
+            })
+
 
             axios.post("http://localhost:8080/building", {
                 number: this.state.number,
@@ -38,7 +54,7 @@ class BuildingCreate extends Component {
                 NotificationManager.error("Could not add");
             })
 
-
+        }
     }
 
     render() {
@@ -48,7 +64,7 @@ class BuildingCreate extends Component {
                 <Row className="show-grid">
                     <form onSubmit={this.OnOccupantCreateSubmit}>
                         <Col xs={6} xsOffset={3}>
-                            <FormGroup >
+                            <FormGroup validationState={this.state.numberDescriptionValid} >
                                 <Label><Trans>Number</Trans></Label>
                                 <FormControl
                                     type="text"
@@ -56,6 +72,7 @@ class BuildingCreate extends Component {
                                     id="number"
                                     onChange={this.handleChange}
                                 />
+                                <HelpBlock>{this.state.numberBlockText}</HelpBlock>
                             </FormGroup>
                         </Col>
                         <FormGroup>

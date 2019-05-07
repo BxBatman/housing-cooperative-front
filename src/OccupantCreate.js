@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import ReCAPTCHA from "react-google-recaptcha";
-import {Button, Col, FormControl, FormGroup, Glyphicon, Grid, HelpBlock, Label, Row} from 'react-bootstrap';
+import {Button, Col, Form, FormControl, FormGroup, Glyphicon, Grid, HelpBlock, Label, Row} from 'react-bootstrap';
 import {NotificationContainer, NotificationManager} from 'react-notifications';
 import Loader from 'react-loader-spinner'
 import axios from 'axios';
@@ -17,7 +17,14 @@ class OccupantCreate extends Component {
             email: '',
             loading: false,
             inprogress: false,
-            captchaDone: false
+            captchaDone: false,
+            firstnameDescriptionValid: null,
+            firstnameBlockText: null,
+            lastnameDescriptionValid: null,
+            lastnameBlockText: null,
+            valid: true,
+            emailDescriptionValid: null,
+            emailBlockText: null,
         }
     }
 
@@ -30,41 +37,97 @@ class OccupantCreate extends Component {
     OnOccupantCreateSubmit = (e) => {
         e.preventDefault();
 
-        if (this.state.inprogress === false) {
-
+        if (this.state.firstname === "" || !/^[a-zA-Z]+$/.test(this.state.firstname)) {
             this.setState({
-                loading:true,
-                inprogress: true
+                firstnameDescriptionValid: "error",
+                firstnameBlockText: "Invalid firstname",
+                valid: false
             })
-
-            axios.post("http://localhost:8080/occupant", {
-                firstname: this.state.firstname,
-                lastname: this.state.lastname,
-                email: this.state.email
-
-            }, {
-                headers: {
-                    "Authorization": localStorage.getItem('token')
-                }
-            }).then(response => {
-                this.setState({
-                    loading: false
-                })
-                this.props.history.push("/occupants");
-            }).catch(error => {
-                this.setState({
-                    loading: false
-                })
-                NotificationManager.error("Could not add");
+        } else {
+            this.setState({
+                firstnameDescriptionValid: null,
+                firstnameBlockText: null,
+                valid: true
             })
         }
 
+        if (this.state.lastname === "" || !/^[a-zA-Z]+$/.test(this.state.lastname)) {
+            this.setState({
+                lastnameDescriptionValid: "error",
+                lastnameBlockText: "Invalid last name",
+                valid: false
+            })
+        } else {
+            this.setState({
+                lastnameDescriptionValid: null,
+                lastnameBlockText: null,
+                valid: true
+            })
+        }
+
+        if(this.state.email === "" || !/^\S+@\S+\.\S+$/.test(this.state.email)) {
+            this.setState({
+                emailDescriptionValid: "error",
+                emailBlockText: "Invalid email",
+                valid: false
+            })
+        } else {
+            this.setState({
+                emailDescriptionValid: null,
+                emailBlockText:  null,
+                valid: true
+            })
+        }
+
+
+        if (this.state.valid === true ) {
+            this.sendCreateOccupant();
+        }
+
+
     }
 
-    onChangeCaptcha() {
+
+    sendCreateOccupant() {
+        if (this.state.captchaDone === true) {
+            if (this.state.inprogress === false) {
+
+                this.setState({
+                    loading: true,
+                    inprogress: true
+                })
+
+                axios.post("http://localhost:8080/occupant", {
+                    firstname: this.state.firstname,
+                    lastname: this.state.lastname,
+                    email: this.state.email
+
+                }, {
+                    headers: {
+                        "Authorization": localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    this.setState({
+                        loading: false
+                    })
+                    this.props.history.push("/occupants");
+                }).catch(error => {
+                    this.setState({
+                        loading: false
+                    })
+                    NotificationManager.error("Could not add");
+                })
+            }
+        } else {
+            NotificationManager.error("Solve captcha");
+        }
+    }
+
+    onChangeCaptcha = () => {
         this.setState({
             captchaDone: true
         })
+
     }
 
     render() {
@@ -84,9 +147,9 @@ class OccupantCreate extends Component {
         return (
             <Grid>
                 <Row className="show-grid">
-                    <form onSubmit={this.OnOccupantCreateSubmit}>
+                    <Form onSubmit={this.OnOccupantCreateSubmit}>
                         <Col xs={6} xsOffset={3}>
-                            <FormGroup >
+                            <FormGroup validationState={this.state.firstnameDescriptionValid}>
                                 <Label><Trans>First name</Trans></Label>
                                 <FormControl
                                     type="text"
@@ -94,9 +157,11 @@ class OccupantCreate extends Component {
                                     id="firstname"
                                     onChange={this.handleChange}
                                 />
+                                <HelpBlock>{this.state.firstnameBlockText}</HelpBlock>
                             </FormGroup>
+                            <HelpBlock />
 
-                            <FormGroup >
+                            <FormGroup validationState={this.state.lastnameDescriptionValid}>
                                 <Label><Trans>Last name</Trans></Label>
                                 <FormControl
                                     type="text"
@@ -104,9 +169,10 @@ class OccupantCreate extends Component {
                                     id="lastname"
                                     onChange={this.handleChange}
                                 />
+                                <HelpBlock>{this.state.lastnameBlockText}</HelpBlock>
                             </FormGroup>
 
-                            <FormGroup >
+                            <FormGroup validationState={this.state.emailDescriptionValid}>
                                 <Label>Email</Label>
                                 <FormControl
                                     type="email"
@@ -114,6 +180,7 @@ class OccupantCreate extends Component {
                                     id="email"
                                     onChange={this.handleChange}
                                 />
+                                <HelpBlock>{this.state.emailBlockText}</HelpBlock>
                             </FormGroup>
 
                             <FormGroup>
@@ -129,7 +196,8 @@ class OccupantCreate extends Component {
 
                             </Col>
                         </FormGroup>
-                    </form>
+                    </Form
+                        >
                 </Row>
                 <NotificationContainer/>
             </Grid>

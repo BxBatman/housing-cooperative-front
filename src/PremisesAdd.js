@@ -13,8 +13,10 @@ class PremisesAdd extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            houseNumber: "",
-            buildingId: props.location.state.id
+            number: "",
+            buildingId: props.location.state.id,
+            numberDescriptionValid: null,
+            numberBlockText: null
         }
     }
 
@@ -28,20 +30,31 @@ class PremisesAdd extends Component {
     OnPremisesAdd = (e) => {
         e.preventDefault();
 
+        if (this.state.number === "" || !/^[a-zA-Z0-9]*$/.test(this.state.number) ) {
+            this.setState({
+                numberDescriptionValid: "error",
+                numberBlockText: "Invalid number",
+            })
+        } else {
+            this.setState({
+                numberDescriptionValid: null,
+                numberBlockText: null,
+            })
 
-        axios.post("http://localhost:8080/building/" + this.state.buildingId, {
-            number: this.state.number,
-        }, {
-            headers: {
-                "Authorization": localStorage.getItem('token')
-            }
-        }).then(response => {
-            this.props.history.goBack();
 
-        }).catch(error => {
-            NotificationManager.error("Could not add");
-        })
+            axios.post("http://localhost:8080/building/" + this.state.buildingId, {
+                number: this.state.number,
+            }, {
+                headers: {
+                    "Authorization": localStorage.getItem('token')
+                }
+            }).then(response => {
+                this.props.history.goBack();
 
+            }).catch(error => {
+                NotificationManager.error("Could not add");
+            })
+        }
 
     }
 
@@ -51,7 +64,7 @@ class PremisesAdd extends Component {
                 <Row className="show-grid">
                     <form onSubmit={this.OnPremisesAdd}>
                         <Col xs={6} xsOffset={3}>
-                            <FormGroup>
+                            <FormGroup validationState={this.state.numberDescriptionValid}>
                                 <Label><Trans>Number</Trans></Label>
                                 <FormControl
                                     type="text"
@@ -59,6 +72,7 @@ class PremisesAdd extends Component {
                                     id="number"
                                     onChange={this.handleChange}
                                 />
+                                <HelpBlock>{this.state.numberBlockText}</HelpBlock>
                             </FormGroup>
 
                         </Col>

@@ -16,6 +16,7 @@ class Premises extends Component {
             insertText: <Trans>Insert</Trans>
         }
 
+        this.onDelete = this.onDelete.bind(this);
     }
 
 
@@ -44,6 +45,44 @@ class Premises extends Component {
             })
             this.setState(newState);
         }).catch(error => console.log(error));
+    }
+
+
+    onDelete = (i) => {
+        console.log(i.id + " " + this.state.id);
+        axios.delete("http://localhost:8080/building/" + i.id +"/"+ this.state.id, {
+            headers: {
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(response => {
+            var url;
+            if (this.state.isBuilding) {
+                url = "building/all/";
+            } else {
+                url = "premises/occupant/";
+            }
+            axios.get("http://localhost:8080/" + url + this.state.id, {
+                headers: {
+                    "Authorization": localStorage.getItem("token")
+                }
+            }).then(response => {
+                console.log(response);
+                const newPremises = response.data.map(e => {
+                    return {
+                        id: e.id,
+                        number: e.number
+                    };
+                });
+
+                const newState = Object.assign({}, this.state, {
+                    premises: newPremises
+                })
+                this.setState(newState);
+            }).catch(error => console.log(error));
+        }).catch(error => {
+            console.log(error);
+        })
+
     }
 
     render() {
@@ -80,7 +119,7 @@ class Premises extends Component {
                                 state: {id: premise.id}
                             }}><Button className="pull-right" bsSize="small" style={{marginLeft: 5}} bsStyle="info"><Trans>Check bills</Trans>
                             </Button></Link>
-                                <Button className="pull-right" bsSize="small" bsStyle="danger"><Trans>Delete</Trans>
+                                <Button className="pull-right" onClick={this.onDelete.bind(this, premise)} bsSize="small" bsStyle="danger"><Trans>Delete</Trans>
                                 </Button>
                             </ListGroupItem>)}
                         </ListGroup>
