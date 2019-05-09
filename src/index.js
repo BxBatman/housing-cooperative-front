@@ -17,6 +17,8 @@ import OccupantBillCreate from './occupant/OccupantBillCreate';
 import PremisesAdd from './PremisesAdd';
 import OccupantNewPremises from './occupant/OccupantNewPremises';
 import BuildingCreate from './BuildingCreate';
+import Managers from './Managers';
+import ManagerCreate from './manager/ManagerCreate'
 
 ReactDOM.render((
     <BrowserRouter>
@@ -36,6 +38,8 @@ ReactDOM.render((
             )}/>
             <Route path="/premisesAdd" component={PremisesAdd} />
             <Route path="/buildingCreate" component={BuildingCreate}/>
+            <Route path="/managers" component={Managers}/>
+            <Route path="/managerCreate" component={ManagerCreate}/>
 
         </div>
 

@@ -50,7 +50,7 @@ class Login extends Component {
             if (response.data.role.match("ROLE_ADMIN")) {
                 this.props.history.push("/buildings");
             } else if (response.data.role.match("ROLE_OCCUPANT")) {
-                this.props.history.push("/occupantBills");
+                this.props.history.push("/occupantPremises");
             }
         }).catch(error => {
             NotificationManager.error("Credentials do not match");
@@ -60,6 +60,14 @@ class Login extends Component {
     }
 
     render() {
+
+        if (localStorage.getItem("role") == "ROLE_ADMIN") {
+            this.props.history.push("/buildings");
+        }
+        else if(localStorage.getItem("role") == "ROLE_OCCUPANT") {
+            this.props.history.push("/occupantPremises");
+        }
+
         return (
             <div className="Login">
                 <form onSubmit={this.OnSubmit}>

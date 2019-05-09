@@ -21,7 +21,7 @@ class Managers extends Component {
 
 
     componentDidMount() {
-        axios.get("http://localhost:8080/occupant/all", {
+        axios.get("http://localhost:8080/manager/all", {
             headers: {
                 "Authorization": localStorage.getItem("token")
             }
@@ -45,13 +45,13 @@ class Managers extends Component {
 
     buttonFormatter(cell, row){
         return <Link to={{
-            pathname: "/premises",
+            pathname: "/managerBuildings",
             state: {
                 id: row.id,
                 building: false
             }
 
-        }}><Button><Trans>Premises</Trans></Button></Link>
+        }}><Button><Trans>Buildings</Trans></Button></Link>
     }
 
     selectRowProp = {
@@ -67,6 +67,7 @@ class Managers extends Component {
         return (
             <DeleteButton
                 btnText= {text}
+                style={{height: 35, width:80, marginRight: 5}}
                 btnContextual='btn-warning'
             />
         );
@@ -76,10 +77,11 @@ class Managers extends Component {
         var text = this.state.insertText;
         return (
             <Link to={{
-                pathname: "/occupantCreate"
+                pathname: "/managerCreate"
             }}>
                 <InsertButton
                     btnText={text}
+                    style={{height: 35, width:80}}
                     btnContextual='btn-success'
                 />
             </Link>
@@ -105,7 +107,7 @@ class Managers extends Component {
                             <TableHeaderColumn dataField='firstname'><Trans>First name</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataField='lastname'><Trans>Last name</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataField='email'>E-mail</TableHeaderColumn>
-                            <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Premises</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Buildings</Trans></TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
                     <Col lg={2}>

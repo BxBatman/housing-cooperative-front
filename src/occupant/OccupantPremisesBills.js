@@ -119,7 +119,6 @@ class OccupantBills extends Component {
             searchField: this.createCustomSearchField
         };
 
-
         return (
             <Grid>
                 <Row>

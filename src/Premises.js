@@ -49,40 +49,26 @@ class Premises extends Component {
 
 
     onDelete = (i) => {
-        console.log(i.id + " " + this.state.id);
+
+        this.setState(prevState=>({
+            premises: prevState.premises.filter(el => el.id !== i.id)
+        }));
+
         axios.delete("http://localhost:8080/building/" + i.id +"/"+ this.state.id, {
             headers: {
                 "Authorization": localStorage.getItem("token")
             }
         }).then(response => {
-            var url;
-            if (this.state.isBuilding) {
-                url = "building/all/";
-            } else {
-                url = "premises/occupant/";
-            }
-            axios.get("http://localhost:8080/" + url + this.state.id, {
-                headers: {
-                    "Authorization": localStorage.getItem("token")
-                }
-            }).then(response => {
-                console.log(response);
-                const newPremises = response.data.map(e => {
-                    return {
-                        id: e.id,
-                        number: e.number
-                    };
-                });
-
-                const newState = Object.assign({}, this.state, {
-                    premises: newPremises
-                })
-                this.setState(newState);
-            }).catch(error => console.log(error));
         }).catch(error => {
             console.log(error);
         })
 
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.premises != this.state.premises) {
+
+        }
     }
 
     render() {

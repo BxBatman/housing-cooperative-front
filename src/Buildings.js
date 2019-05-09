@@ -109,6 +109,10 @@ class Buildings extends Component {
             searchField: this.createCustomSearchField
         };
 
+        if (localStorage.getItem("role") == "ROLE_OCCUPANT") {
+            this.props.history.push("/occupantPremises");
+        }
+
         return (
             <Grid>
                 <Row>
