@@ -91,6 +91,27 @@ class OccupantBills extends Component {
 
     }
 
+    generatePDF(row) {
+        axios.get("http://localhost:8080/bill/pdf/"+ row.id, {
+            responseType: 'blob',
+            headers: {
+                "Authorization": localStorage.getItem('token'),
+                "Content-Type": 'application/json',
+                "Accept": 'application/pdf'
+            }
+        }).then(response => {
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'bill' +row.id +'.pdf');
+            document.body.appendChild(link);
+            link.click();
+
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
     createCustomSearchField = (props) => {
         return (
             <SearchField
@@ -104,6 +125,14 @@ class OccupantBills extends Component {
             return <Button disabled ={true}>Done</Button>
         } else {
             return <Button onClick={() => this.acceptBill(row)} ><Trans>Accept</Trans></Button>
+        }
+    }
+
+    buttonPdfFormatter(cell,row) {
+        if (row.accepted === true) {
+            return <Button onClick={()=>this.generatePDF(row)}>Generate</Button>
+        } else {
+            return <Button disabled={true} >Generate</Button>
         }
     }
 
@@ -146,6 +175,7 @@ class OccupantBills extends Component {
                             <TableHeaderColumn dataField='date'><Trans>Date</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataField='accepted'><Trans>Accepted</Trans></TableHeaderColumn>
                             {data}
+                            <TableHeaderColumn dataFormat={this.buttonPdfFormatter.bind(this)} dataField='pdf'>PDF</TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
                     <Col lg={1}>

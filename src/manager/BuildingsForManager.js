@@ -8,11 +8,11 @@ import 'react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.m
 import { Trans } from 'react-i18next';
 import 'react-bootstrap-table/dist/react-bootstrap-table.min.css';
 import {NotificationManager, NotificationContainer} from "react-notifications";
-class ManagerBuildings extends Component {
+class BuildingsForManager extends Component {
     constructor(props) {
         super();
         this.state = {
-            id: props.location.state.id,
+            id: localStorage.getItem("id"),
             buildings: [],
             deleteText: <Trans>Delete</Trans>,
             insertText: <Trans>Insert</Trans>
@@ -44,7 +44,7 @@ class ManagerBuildings extends Component {
 
     buttonFormatter(cell, row){
         return <Link to={{
-            pathname: "/premises",
+            pathname: "/managerPremises",
             state: {
                 id: row.id,
                 building: true
@@ -130,7 +130,7 @@ class ManagerBuildings extends Component {
                     <Col lg={2}></Col>
                     <Col lg={8}>
                         <BootstrapTable data={this.state.buildings}
-                                        search={true} selectRow={this.selectRowProp} pagination={true} options={options} insertRow deleteRow>
+                                        search={true} selectRow={this.selectRowProp} pagination={true} options={options}>
                             <TableHeaderColumn hidden={true} autoValue={true} dataField='id' isKey>Id</TableHeaderColumn>
                             <TableHeaderColumn dataField='number'><Trans>Number</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Premises</Trans></TableHeaderColumn>
@@ -145,4 +145,4 @@ class ManagerBuildings extends Component {
     }
 }
 
-export default withNamespaces()(ManagerBuildings);
+export default withNamespaces()(BuildingsForManager);

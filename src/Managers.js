@@ -21,7 +21,7 @@ class Managers extends Component {
 
 
     componentDidMount() {
-        axios.get("http://localhost:8080/manager/all", {
+        axios.get("http://localhost:8080/manag/all", {
             headers: {
                 "Authorization": localStorage.getItem("token")
             }
@@ -59,7 +59,17 @@ class Managers extends Component {
     };
 
 
-    handleDeleteButtonClick = (onClick) => {
+    handleDeleteButtonClick = (rowKeys) => {
+        axios.delete("http://localhost:8080/manag/" + rowKeys, {
+            headers: {
+                "Authorization": localStorage.getItem('token')
+            }
+        } ).then(response =>{
+            NotificationManager.success("Manager deleted");
+        }).catch(error => {
+            console.log(error);
+            NotificationManager.error("Could not delete occupant");
+        })
     }
 
     createCustomDeleteButton = (onClick) => {
@@ -78,6 +88,7 @@ class Managers extends Component {
         return (
             <Link to={{
                 pathname: "/managerCreate"
+
             }}>
                 <InsertButton
                     btnText={text}
@@ -93,7 +104,8 @@ class Managers extends Component {
 
         const options = {
             deleteBtn: this.createCustomDeleteButton,
-            insertBtn: this.createCustomInsertButton
+            insertBtn: this.createCustomInsertButton,
+            afterDeleteRow: this.handleDeleteButtonClick,
         };
 
         return (

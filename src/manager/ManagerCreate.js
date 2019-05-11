@@ -97,7 +97,7 @@ class ManagerCreate extends Component {
                     inprogress: true
                 })
 
-                axios.post("http://localhost:8080/manager", {
+                axios.post("http://localhost:8080/manag", {
                     firstname: this.state.firstname,
                     lastname: this.state.lastname,
                     email: this.state.email

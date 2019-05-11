@@ -19,6 +19,10 @@ import OccupantNewPremises from './occupant/OccupantNewPremises';
 import BuildingCreate from './BuildingCreate';
 import Managers from './Managers';
 import ManagerCreate from './manager/ManagerCreate'
+import ManagerBuildings from './manager/ManagerBuildings';
+import ManagerNewBuildings from "./manager/ManagerNewBuildings";
+import BuildingsForManager from "./manager/BuildingsForManager";
+import ManagerPremises from "./manager/ManagerPremises";
 
 ReactDOM.render((
     <BrowserRouter>
@@ -40,6 +44,10 @@ ReactDOM.render((
             <Route path="/buildingCreate" component={BuildingCreate}/>
             <Route path="/managers" component={Managers}/>
             <Route path="/managerCreate" component={ManagerCreate}/>
+            <Route path="/managerBuildings" component={ManagerBuildings}/>
+            <Route path="/managerNewBuildings" component={ManagerNewBuildings}/>
+            <Route path="/buildingsForManager" component={BuildingsForManager}/>
+            <Route path="/managerPremises" component={ManagerPremises}/>
 
         </div>
 

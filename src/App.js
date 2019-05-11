@@ -8,6 +8,7 @@ import { withNamespaces } from 'react-i18next';
 import i18n from "i18next";
 import NavbarLogin from "./components/NavbarLogin";
 import PageNavbarOccupant from "./components/PageNavbarOccupant";
+import PageNavbarManager from "./components/PageNavbarManager";
 
 class App extends Component {
 
@@ -35,7 +36,7 @@ class App extends Component {
       else if(localStorage.getItem("role").match("ROLE_OCCUPANT")) {
           navbar = <PageNavbarOccupant/>
       } else {
-          navbar = <PageNavbarAdmin/>
+          navbar = <PageNavbarManager/>
       }
 
 

@@ -8,6 +8,7 @@
     "i18next": "^15.0.9",
     "i18next-browser-languagedetector": "^3.0.1",
     "jquery": "^1.12.4",
+    "js-file-download": "^0.4.5",
     "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
     "react-bootstrap-table": "^4.3.1",
