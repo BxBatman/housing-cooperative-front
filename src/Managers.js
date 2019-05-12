@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton} from 'react-bootstrap-table';
+import {BootstrapTable, TableHeaderColumn, DeleteButton, InsertButton,SearchField} from 'react-bootstrap-table';
 import {Row, Grid, Col, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import { withNamespaces } from 'react-i18next';
@@ -54,6 +54,16 @@ class Managers extends Component {
         }}><Button><Trans>Buildings</Trans></Button></Link>
     }
 
+    buttonEditFormatter(cell, row){
+        return <Link to={{
+            pathname: "/editManager",
+            state: {
+                row: row,
+            }
+
+        }}><Button><Trans>Edit</Trans></Button></Link>
+    }
+
     selectRowProp = {
         mode: 'radio'
     };
@@ -65,10 +75,10 @@ class Managers extends Component {
                 "Authorization": localStorage.getItem('token')
             }
         } ).then(response =>{
-            NotificationManager.success("Manager deleted");
+            NotificationManager.success(<Trans>Manager deleted</Trans>);
         }).catch(error => {
             console.log(error);
-            NotificationManager.error("Could not delete occupant");
+            NotificationManager.error(<Trans>Could not delete manager</Trans>);
         })
     }
 
@@ -83,8 +93,12 @@ class Managers extends Component {
         );
     }
 
+    confirmDelete = (next,dropRowKeys) => {
+        next();
+    }
+
     createCustomInsertButton = (onClick) => {
-        var text = this.state.insertText;
+        var text = <Trans>{this.state.insertText}</Trans>;
         return (
             <Link to={{
                 pathname: "/managerCreate"
@@ -99,6 +113,13 @@ class Managers extends Component {
         );
     }
 
+    createCustomSearchField = (props) => {
+        return (
+            <SearchField
+                placeholder=" "/>
+        );
+    }
+
 
     render() {
 
@@ -106,13 +127,15 @@ class Managers extends Component {
             deleteBtn: this.createCustomDeleteButton,
             insertBtn: this.createCustomInsertButton,
             afterDeleteRow: this.handleDeleteButtonClick,
+            searchField: this.createCustomSearchField,
+            handleConfirmDeleteRow: this.confirmDelete
         };
 
         return (
             <Grid>
                 <Row >
-                    <Col lg={2}></Col>
-                    <Col lg={8}>
+                    <Col lg={1}></Col>
+                    <Col lg={10}>
                         <BootstrapTable data={this.state.occupants}
                                         search={true} selectRow={this.selectRowProp} pagination={true} options={options} insertRow deleteRow>
                             <TableHeaderColumn hidden={true} autoValue={true} dataField='id' isKey>Id</TableHeaderColumn>
@@ -120,9 +143,10 @@ class Managers extends Component {
                             <TableHeaderColumn dataField='lastname'><Trans>Last name</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataField='email'>E-mail</TableHeaderColumn>
                             <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Buildings</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataFormat={this.buttonEditFormatter}><Trans>Edit</Trans></TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
-                    <Col lg={2}>
+                    <Col lg={1}>
                         <NotificationContainer/>
                     </Col>
                 </Row>

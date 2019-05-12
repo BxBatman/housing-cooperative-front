@@ -45,7 +45,7 @@ class OccupantBillCreate extends Component {
                 this.props.history.goBack();
             } else {
 
-                this.props.history.push("/occupantPremises");
+                this.props.history.goBack();
             }
         }).catch(error => {
             NotificationManager.error("Could not add");

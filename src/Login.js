@@ -55,7 +55,7 @@ class Login extends Component {
                 this.props.history.push("/buildingsForManager");
             }
         }).catch(error => {
-            NotificationManager.error("Credentials do not match");
+            NotificationManager.error(<Trans>Credentials do not match</Trans>);
             console.log(error);
         })
 

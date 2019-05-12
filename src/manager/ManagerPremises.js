@@ -41,7 +41,7 @@ class ManagerPremises extends Component {
             });
 
             const newState = Object.assign({}, this.state, {
-                premises: newPremises
+                premises: newPremises.sort((a,b) => a.number - b.number)
             })
             this.setState(newState);
         }).catch(error => console.log(error));

@@ -23,6 +23,9 @@ import ManagerBuildings from './manager/ManagerBuildings';
 import ManagerNewBuildings from "./manager/ManagerNewBuildings";
 import BuildingsForManager from "./manager/BuildingsForManager";
 import ManagerPremises from "./manager/ManagerPremises";
+import EditManager from "./manager/EditManager";
+import EditOccupant from "./occupant/EditOccupant";
+import EditBuilding from "./EditBuilding";
 
 ReactDOM.render((
     <BrowserRouter>
@@ -48,7 +51,9 @@ ReactDOM.render((
             <Route path="/managerNewBuildings" component={ManagerNewBuildings}/>
             <Route path="/buildingsForManager" component={BuildingsForManager}/>
             <Route path="/managerPremises" component={ManagerPremises}/>
-
+            <Route path="/editManager" component={EditManager}/>
+            <Route path="/editOccupant" component={EditOccupant}/>
+            <Route path="/editBuilding" component={EditBuilding}/>
         </div>
 
     </BrowserRouter>

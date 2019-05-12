@@ -28,5 +28,16 @@
   "Date": "Data",
   "Accepted": "Zakceptowano",
   "Accept": "Zaakceptuj",
-  "Choose": "Wybierz"
+  "Choose": "Wybierz",
+  "Check bills": "Sprawdź rachunki",
+  "Managers": "Zarządcy",
+  "Building deleted": "Budynek został usunięty",
+  "Occupant deleted": "Lokator został usunięty",
+  "Could not delete occupant": "Nie udało się usunąć lokatora",
+  "Manager deleted": "Zarządca został usunięty",
+  "Could not delete manager": "Nie udało się usunąć zarządcy",
+  "Edit": "Zaaktualizuj",
+  "Credentials do not match" : "Błąd autoryzacji",
+  "List of premises": "Lista mieszkań",
+  "Bill accepted": "Rachunek zaakceptowany"
 }

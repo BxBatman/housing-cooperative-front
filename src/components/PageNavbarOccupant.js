@@ -15,10 +15,12 @@ class PageNavbarOccupant extends Component {
     }
 
     changeLngPL = (e)=> {
+        localStorage.setItem("lang","pl");
         i18n.changeLanguage('pl');
     }
 
     changeLngEN = (e)=> {
+        localStorage.setItem("lang","en");
         i18n.changeLanguage('en');
     }
 

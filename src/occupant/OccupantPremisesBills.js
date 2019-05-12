@@ -81,18 +81,18 @@ class OccupantBills extends Component {
             }
         }).then(response => {
             console.log(response);
-            NotificationManager.success("bill accepted");
+            NotificationManager.success(<Trans>Bill accepted</Trans>);
             this.downloadBills();
 
         }).catch(error => {
             console.log(error);
-            NotificationManager.error("erro");
+            NotificationManager.error(Error);
         })
 
     }
 
     generatePDF(row) {
-        axios.get("http://localhost:8080/bill/pdf/"+ row.id, {
+        axios.get("http://localhost:8080/bill/pdf/"+ localStorage.getItem("login") +"/" + row.id + "/" +localStorage.getItem("lang"), {
             responseType: 'blob',
             headers: {
                 "Authorization": localStorage.getItem('token'),
@@ -139,9 +139,14 @@ class OccupantBills extends Component {
     render() {
 
         let data;
+        let dataOccupant;
 
-        if (localStorage.getItem("role") === "ROLE_ADMIN") {
+        if (localStorage.getItem("role") === "ROLE_ADMIN" || localStorage.getItem("role") === "ROLE_MANAGER") {
             data = <TableHeaderColumn dataFormat={this.buttonFormatter.bind(this)}><Trans>Accept</Trans></TableHeaderColumn>
+        }
+
+        if(localStorage.getItem("role") === "ROLE_OCCUPANT") {
+            dataOccupant = <TableHeaderColumn dataFormat={this.buttonPdfFormatter.bind(this)} dataField='pdf'>PDF</TableHeaderColumn>
         }
 
         const options = {
@@ -175,7 +180,7 @@ class OccupantBills extends Component {
                             <TableHeaderColumn dataField='date'><Trans>Date</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataField='accepted'><Trans>Accepted</Trans></TableHeaderColumn>
                             {data}
-                            <TableHeaderColumn dataFormat={this.buttonPdfFormatter.bind(this)} dataField='pdf'>PDF</TableHeaderColumn>
+                            {dataOccupant}
                         </BootstrapTable>
                     </Col>
                     <Col lg={1}>

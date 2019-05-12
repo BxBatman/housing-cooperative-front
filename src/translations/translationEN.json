@@ -28,6 +28,16 @@
   "Date": "Date",
   "Accepted": "Accepted",
   "Accept": "Accept",
-  "Choose": "Choose"
-
+  "Choose": "Choose",
+  "Check bills": "Check bills",
+  "Managers": "Managers",
+  "Building deleted": "Building deleted",
+  "Occupant deleted": "Occupant deleted",
+  "Could not delete occupant": "Could not delete occupant",
+  "Manager deleted": "Manager deleted",
+  "Could not delete manager": "Could not delete manager",
+  "Edit": "Edit",
+  "Credentials do not match" : "Credentials do not match",
+  "List of premises": "List of premises",
+  "Bill accepted": "Bill accepted"
 }

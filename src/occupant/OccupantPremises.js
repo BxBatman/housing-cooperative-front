@@ -43,12 +43,13 @@ class OccupantPremises extends Component {
                 <Row>
                     <Col lg={3}></Col>
                     <Col lg={6}>
+                        <h3><Trans>List of premises</Trans>: </h3>
                         <ListGroup>
-                            {this.state.premises.map((premise,i) => <ListGroupItem key={i}>
-                                {premise.id} {premise.number}  <Link to={{
+                            {this.state.premises.map((premise,i) => <ListGroupItem key={i} style={{height:50}}>
+                                <Trans>Number</Trans>: {premise.number}  <Link to={{
                                 pathname: "/occupantPremisesBills",
                                 state: {id: premise.id}
-                            }}><Button className="pull-right" bsSize="small" bsStyle="info">Check bills
+                            }}><Button className="pull-right" bsSize="small" bsStyle="info"><Trans>Check bills</Trans>
                             </Button></Link>
                             </ListGroupItem>)}
                         </ListGroup>

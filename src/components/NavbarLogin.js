@@ -21,7 +21,7 @@ class NavbarLogin extends Component {
             <Navbar inverse collapseOnSelect>
                 <Navbar.Header>
                     <Navbar.Brand>
-                        Car Management
+                        Housing Cooperative
                     </Navbar.Brand>
                     <Navbar.Toggle/>
                 </Navbar.Header>

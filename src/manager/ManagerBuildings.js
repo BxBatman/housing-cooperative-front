@@ -61,20 +61,22 @@ class ManagerBuildings extends Component {
     handleDeleteButtonClick = (rowKeys) =>{
 
 
-        axios.delete("http://localhost:8080/occupant/" + rowKeys, {
+        axios.delete("http://localhost:8080/manag/" + rowKeys + "/" + this.state.id, {
             headers: {
                 "Authorization": localStorage.getItem('token')
             }
         } ).then(response =>{
-            NotificationManager.success("Occupant deleted");
         }).catch(error => {
             console.log(error);
-            NotificationManager.error("Could not delete occupant");
         })
 
 
 
 
+    }
+
+    confirmDelete = (next,dropRowKeys) => {
+        next();
     }
 
     createCustomDeleteButton = (rowKeys) => {
@@ -121,7 +123,8 @@ class ManagerBuildings extends Component {
             deleteBtn: this.createCustomDeleteButton,
             afterDeleteRow: this.handleDeleteButtonClick,
             insertBtn: this.createCustomInsertButton,
-            searchField: this.createCustomSearchField
+            searchField: this.createCustomSearchField,
+            handleConfirmDeleteRow: this.confirmDelete
         };
 
         return (

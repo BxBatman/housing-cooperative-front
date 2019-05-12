@@ -67,10 +67,10 @@ class Occupants extends Component {
                 "Authorization": localStorage.getItem('token')
             }
         } ).then(response =>{
-            NotificationManager.success("Occupant deleted");
+            NotificationManager.success(<Trans>Occupant deleted</Trans>);
         }).catch(error => {
             console.log(error);
-            NotificationManager.error("Could not delete occupant");
+            NotificationManager.error(<Trans>Could not delete occupant</Trans>);
         })
 
 
@@ -112,6 +112,20 @@ class Occupants extends Component {
         );
     }
 
+    buttonEditFormatter(cell, row){
+        return <Link to={{
+            pathname: "/editOccupant",
+            state: {
+                row: row,
+            }
+
+        }}><Button><Trans>Edit</Trans></Button></Link>
+    }
+
+    confirmDelete = (next,dropRowKeys) => {
+        next();
+    }
+
 
     render() {
 
@@ -119,14 +133,15 @@ class Occupants extends Component {
             deleteBtn: this.createCustomDeleteButton,
             afterDeleteRow: this.handleDeleteButtonClick,
             insertBtn: this.createCustomInsertButton,
-            searchField: this.createCustomSearchField
+            searchField: this.createCustomSearchField,
+            handleConfirmDeleteRow: this.confirmDelete
         };
 
         return (
             <Grid>
                 <Row >
-                    <Col lg={2}></Col>
-                    <Col lg={8}>
+                    <Col lg={1}></Col>
+                    <Col lg={10}>
                         <BootstrapTable data={this.state.occupants}
                                         search={true} selectRow={this.selectRowProp} pagination={true} options={options} insertRow deleteRow>
                             <TableHeaderColumn hidden={true} autoValue={true} dataField='id' isKey>Id</TableHeaderColumn>
@@ -134,9 +149,10 @@ class Occupants extends Component {
                             <TableHeaderColumn dataField='lastname'><Trans>Last name</Trans></TableHeaderColumn>
                             <TableHeaderColumn dataField='email'>E-mail</TableHeaderColumn>
                             <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Premises</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataFormat={this.buttonEditFormatter}><Trans>Edit</Trans></TableHeaderColumn>
                         </BootstrapTable>
                     </Col>
-                    <Col lg={2}>
+                    <Col lg={1}>
                         <NotificationContainer/>
                     </Col>
                 </Row>

@@ -43,12 +43,16 @@ class Buildings extends Component {
                 "Authorization": localStorage.getItem('token')
             }
         } ).then(response =>{
-            NotificationManager.success("Building deleted");
+            NotificationManager.success(<Trans>Building deleted</Trans>);
         }).catch(error => {
             console.log(error);
             NotificationManager.error("Could not delete buidling");
         })
 
+    }
+
+    confirmDelete = (next,dropRowKeys) => {
+        next();
     }
 
     createCustomDeleteButton = (onClick) => {
@@ -75,6 +79,17 @@ class Buildings extends Component {
                 />
             </Link>
         );
+    }
+
+
+    buttonEditFormatter(cell, row){
+        return <Link to={{
+            pathname: "/editBuilding",
+            state: {
+                row: row,
+            }
+
+        }}><Button><Trans>Edit</Trans></Button></Link>
     }
 
     createCustomSearchField = (props) => {
@@ -106,7 +121,8 @@ class Buildings extends Component {
             deleteBtn: this.createCustomDeleteButton,
             afterDeleteRow: this.handleDeleteButtonClick,
             insertBtn: this.createCustomInsertButton,
-            searchField: this.createCustomSearchField
+            searchField: this.createCustomSearchField,
+            handleConfirmDeleteRow: this.confirmDelete
         };
 
         if (localStorage.getItem("role") == "ROLE_OCCUPANT") {
@@ -123,6 +139,7 @@ class Buildings extends Component {
                             <TableHeaderColumn hidden={true} autoValue={true} dataField='id' isKey>Id</TableHeaderColumn>
                             <TableHeaderColumn dataField='number'>Number</TableHeaderColumn>
                             <TableHeaderColumn dataFormat={this.buttonFormatter}><Trans>Premises</Trans></TableHeaderColumn>
+                            <TableHeaderColumn dataFormat={this.buttonEditFormatter}><Trans>Edit</Trans></TableHeaderColumn>
                         </BootstrapTable>
 
                     </Col>

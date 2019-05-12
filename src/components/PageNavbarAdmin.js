@@ -45,7 +45,7 @@ class PageNavbarAdmin extends Component {
                                 <MenuItem eventKey={3.2}><Trans>Occupants</Trans></MenuItem>
                             </LinkContainer>
                         <LinkContainer to="/managers">
-                            <MenuItem eventKey={3.3}>Managers</MenuItem>
+                            <MenuItem eventKey={3.3}><Trans>Managers</Trans></MenuItem>
                         </LinkContainer>
                         </NavDropdown>
                     </Nav>
